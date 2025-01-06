@@ -19,7 +19,7 @@ shader_type spatial;
 render_mode world_vertex_coords, depth_prepass_alpha, cull_disabled, vertex_lighting;
 
 uniform float CURVATURE;
-uniform float CURVATURE_ACTIVE;
+uniform bool CURVATURE_ACTIVE;
 uniform float CURVATURE_DISTANCE;
 
 uniform sampler2D BASE_TEX;
