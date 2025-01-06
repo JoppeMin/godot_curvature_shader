@@ -16,7 +16,7 @@ CAVEATS: This shader does not provide shadow mapping.
 */
 
 shader_type spatial;
-render_mode world_vertex_coords, depth_draw_alpha_prepass, cull_disabled, vertex_lighting;
+render_mode world_vertex_coords, depth_prepass_alpha, cull_disabled, vertex_lighting;
 
 uniform float CURVATURE;
 uniform float CURVATURE_ACTIVE;
@@ -25,9 +25,9 @@ uniform float CURVATURE_DISTANCE;
 uniform sampler2D BASE_TEX;
 
 void vertex() {
-	if(CURVATURE_ACTIVE == 1.0) {
-		NORMAL = (WORLD_MATRIX * vec4(NORMAL, 0.0)).xyz;
-		float dist = length(CAMERA_MATRIX[3].xyz - VERTEX) / CURVATURE_DISTANCE;
+	if(CURVATURE_ACTIVE == true){
+		NORMAL = (MODEL_MATRIX * vec4(NORMAL, 0.0)).xyz;
+		float dist = length(VIEW_MATRIX[3].xyz - VERTEX) / CURVATURE_DISTANCE;
 		VERTEX.y -= pow(dist, CURVATURE);
 	}
 }
@@ -38,7 +38,6 @@ void fragment() {
 	if(tex.a < 0.3) {
 		discard;
 	}
-	
 	ALBEDO = tex.rgb;
 	ALPHA = tex.a;
 }
